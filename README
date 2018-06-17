@@ -1,0 +1,24 @@
+	    Linkbucket - The free and open-source bookmark manager
+
+Linkbucket is the free and open-source alternative to Pocket
+<https://getpocket.com>. Linkbucket is a bookmark manager where you can save
+your bookmarks in the cloud and access to them from any device. It's useful to
+backup important links and manage them easily.
+
+Free and open-source
+====================
+Linkbucket is distributed under the terms of the GNU Aferro General Public
+License Version 3, so you can install it and run it in your own server.
+
+Laravel Framework
+=================
+This project was made using the PHP Laravel Framework, making it easier to
+install and configure.
+
+Installation
+============-
+- cp .env.example .env
+  complete .env values (optional)
+- php artisan key:generate 
+- php artisan migrate
+- php artisan serve --port=8000 --host=localhost &
