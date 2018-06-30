@@ -22,3 +22,4 @@ Route::post('/add', 'MainController@add');
 Route::get('/remove/{id}', 'MainController@remove');
 Route::get('/edit/{id}', 'HomeController@edit');
 Route::post('/update/{id}', 'MainController@update');
+Route::get('/tags/{tag}', 'HomeController@tags');

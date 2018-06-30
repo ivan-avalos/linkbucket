@@ -19,6 +19,11 @@
 			     name="link" value="{{$link->link}}"
 			placeholder="https://example.com">
 			</div>
+			<div class="form-group">
+			     <label for="tags">Tags </label>
+			     <input type="text" class="form-control"
+			name="tags" value="{{$link->tags}}" placeholder="Enter space separated tags">
+			</div>
 			<button type="submit" class="btn btn-warning">Edit
 			link</button>
 			<a class="btn btn-primary" href="/home">Back</a>

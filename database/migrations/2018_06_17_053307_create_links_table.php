@@ -18,6 +18,7 @@ class CreateLinksTable extends Migration
 	    $table->integer('user_id');
 	    $table->string('title');
 	    $table->string('link');
+	    $table->mediumText('tags');
             $table->timestamps();
         });
     }

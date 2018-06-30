@@ -13,8 +13,9 @@ class MainController extends Controller
     function add(Request $request) {
         $title = $request->input('title');
 	$link = $request->input('link');
+	$tags = $request->input('tags');
 	DB::table('links')->insert(
-	    ['user_id' => Auth::id(), 'link'=>$link, 'title'=>$title]
+	    ['user_id' => Auth::id(), 'link'=>$link, 'title'=>$title, 'tags'=>$tags]
 	);
         return Redirect::route('home');
     }
@@ -25,11 +26,12 @@ class MainController extends Controller
     function update($id, Request $request) {
         $title = $request->input('title');
 	$link = $request->input('link');
+	$tags = $request->input('tags');
         $results = DB::table('links')->where('id', $id)->get();
 	if(sizeof($results) <= 0) return 'Link not found';
 	if($results[0]->user_id != Auth::id()) return '<h1>Unauthorized</h1>';
 	DB::table('links')->where('id', $id)->update(['title'=>$title,
-	'link'=>$link]);
+	'link'=>$link, 'tags'=>$tags]);
 	return Redirect::route('home');
     }
 }
