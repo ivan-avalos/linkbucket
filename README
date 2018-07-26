@@ -17,6 +17,7 @@ install and configure.
 
 Installation
 ============-
+- composer install
 - cp .env.example .env
   complete .env values (optional)
 - php artisan key:generate 
