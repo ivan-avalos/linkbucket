@@ -20,8 +20,13 @@ class MainController extends Controller
     
     //
     function add(Request $request) {
+        // Validate
+        $request->validate([
+            'link' => 'required|unique:links'
+        ]);
+        
         $link = $request->input('link');
-        $tags = $request->input('tags').' ';
+        $tags = $request->input('tags');
         
         // Get title from website
         $title = $this->get_website_title ($link);
@@ -43,10 +48,14 @@ class MainController extends Controller
     }
     
     function update($id, Request $request) {
+        $request->validate([
+            'title'=>'required',
+            'link'=>'required'
+        ]);
+        
         $title = $request->input('title');
         $link = $request->input('link');
         $tags = $request->input('tags');
-        if($tags == '') $tags = ' ';
     
         $dblink = Link::find($id);
         $dblink->title = $title;

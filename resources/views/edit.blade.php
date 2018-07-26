@@ -7,6 +7,13 @@
             <div class="card">
                 <div class="card-header">Edit link</div>
                 <div class="card-body">
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{ $error }}
+                </div>
+                @endforeach
+            @endif
 		    <form action="/update/{{ $link->id }}" method="post">
 			<div class="form-group">
 			     <label for="title">Title</label>

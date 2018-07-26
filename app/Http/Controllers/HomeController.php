@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +39,13 @@ class HomeController extends Controller
     
     public function search(Request $request)
     {
-        $query = $request->input('q');
+        // Validate
+        if(($validator = Validator::make($request->all(), [
+            'search'=>'required' ]))->fails())
+            return redirect('home')->withErrors($validator, 'search');
+        
+        $query = $request->input('search');
+        
         $user = User::find(Auth::id());
         $links = $user->links()->orderBy('id', 'desc')
             ->where('title', 'like', '%'.$query.'%')
@@ -47,7 +54,7 @@ class HomeController extends Controller
             ->simplePaginate(15);
         foreach($links as $link) $link->tags = explode(" ", $link->tags); 
         
-    	return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>'Search: '.$query]);
+    	return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>'Search: '.$query, 'back'=>true]);
     }
     
     public function edit($id)
@@ -68,6 +75,6 @@ class HomeController extends Controller
     	       array_push($filtered, $link);
     	}
     	return view('home', ['links'=>$filtered, 'no_add'=>true, 'pagination'=>false,
-    	'title'=>'Tag: '.$tag]);
+    	'title'=>'Tag: '.$tag, 'back'=>true]);
     }	
 }

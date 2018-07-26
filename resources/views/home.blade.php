@@ -14,13 +14,21 @@
                         {{ session('status') }}
                     </div>
                     @endif
+                    
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                        @endforeach
+                    @endif
 
                     <form action="/add" method="post">
                         <!--<div class="form-group">
-			     <label for="title">Title</label>
-			     <input type="text" class="form-control"
-			name="title" placeholder="Example Website" />
-			</div>-->
+            			     <label for="title">Title</label>
+            			     <input type="text" class="form-control"
+            			      name="title" placeholder="Example Website" />
+            			</div>-->
                         <div class="form-group">
                             <label for="link">Link</label>
                             <input type="text" class="form-control" name="link" placeholder="https://example.com">
@@ -35,14 +43,21 @@
                 </div>
             </div>
             <!-- ENDS ADD-LINK  -->
-            @endempty
+            
             <!-- STARTS SEARCH -->
             <div class="card" style="margin-bottom:10px;">
                 <div class="card-header">Search</div>
                 <div class="card-body">
+                    @if ($errors->search->any())
+                        @foreach ($errors->search->all() as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                        @endforeach
+                    @endif
                     <form action="/search" method="get">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="q" placeholder="Enter search query">
+                            <input type="text" class="form-control" name="search" placeholder="Enter search query">
                             <div class="input-group-append">
         			            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
     			            </div>
@@ -51,10 +66,14 @@
                     </form>
                 </div>
             </div>
+            @endempty
             <!-- ENDS SEARCH -->
             <br>
         </div>
         <div class="col-md-8">
+            @isset($back)
+                <p><a href="/home" class="btn btn-lg btn-primary"><i class="fas fa-arrow-left"></i> Back</a></p>
+            @endisset
             <h1>
                 @empty($title) Links @else {{$title}} @endempty
             </h1>
