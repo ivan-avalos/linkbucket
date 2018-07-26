@@ -46,6 +46,7 @@ class MainController extends Controller
         $title = $request->input('title');
         $link = $request->input('link');
         $tags = $request->input('tags');
+        if($tags == '') $tags = ' ';
     
         $dblink = Link::find($id);
         $dblink->title = $title;
