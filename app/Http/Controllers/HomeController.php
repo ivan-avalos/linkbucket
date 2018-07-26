@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\User;
+use App\Link;
+
 class HomeController extends Controller
 {
     /**
@@ -26,30 +29,45 @@ class HomeController extends Controller
      */
     public function index()
     {
-    	$links = DB::table('links')->where('user_id', Auth::id())->orderBy('id', 'desc')->simplePaginate(15);
-    	foreach($links as $link) {
-    		$link->tags = explode(" ", $link->tags);
-    	}
+    	$user = User::find(Auth::id());
+    	$links = $user->links()->orderBy('id', 'desc')->simplePaginate(15);
+    	foreach($links as $link) $link->tags = explode(" ", $link->tags);
+    	
     	return view('home', ['links'=>$links]);
+    }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+        $user = User::find(Auth::id());
+        $links = $user->links()->orderBy('id', 'desc')
+            ->where('title', 'like', '%'.$query.'%')
+            ->orWhere('link', 'like', '%'.$query.'%')
+            ->orWhere('tags', 'like', '%'.$query.'%')
+            ->simplePaginate(15);
+        foreach($links as $link) $link->tags = explode(" ", $link->tags); 
+        
+    	return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>'Search: '.$query]);
     }
     
     public function edit($id)
     {
-    	$link = DB::table('links')->where('id', $id)->get();
-    	if(sizeof($link) == 0) return '<h1>Link not found</h1>';
-    	if($link[0]->user_id != Auth::id()) return '<h1>Unauthorized</h1>';
-    	return view('edit', ['link'=>$link[0]]);
+    	$user = User::find(Auth::id());
+    	$link = @$user->links()->where('id', $id)->get()[0];
+    	if($link) return view('edit', ['link'=>$link]);
+    	else return '<h1>Link not found</h1>';
     }
 
     public function tags($tag){
-    	$links = DB::table('links')->where('user_id', Auth::id())->orderBy('id', 'desc')->get();
-    	$filtered_links = [];
+        $user = User::find(Auth::id());
+    	$links = $user->links()->orderBy('id', 'desc')->get();
+    	$filtered = [];
     	foreach($links as $link) {
-    		$link->tags = explode(" ", $link->tags);
-    		if(in_array($tag, $link->tags))
-    		array_push ($filtered_links, $link);
+    	    $link->tags = explode(" ", $link->tags);
+    	    if(in_array($tag, $link->tags))
+    	       array_push($filtered, $link);
     	}
-    	return view('home', ['links'=>$filtered_links, 'no_add'=>true, 'pagination'=>false,
+    	return view('home', ['links'=>$filtered, 'no_add'=>true, 'pagination'=>false,
     	'title'=>'Tag: '.$tag]);
-    }    	  	
+    }	
 }

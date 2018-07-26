@@ -7,28 +7,52 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\User;
+use App\Link;
+
 class MainController extends Controller
 {
+    private function get_website_title($url) {
+        $data = file_get_contents($url);
+        $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : $url;
+        return $title;
+    }  
+    
     //
     function add(Request $request) {
-        $title = $request->input('title');
         $link = $request->input('link');
-        $tags = $request->input('tags');
-        DB::table('links')->insert(['user_id' => Auth::id(), 'link'=>$link, 'title'=>$title, 'tags'=>$tags]);
+        $tags = $request->input('tags').' ';
+        
+        // Get title from website
+        $title = $this->get_website_title ($link);
+        
+        $dblink = new Link;
+        $dblink->user_id = Auth::id();
+        $dblink->title = $title;
+        $dblink->link = $link;
+        $dblink->tags = $tags;
+        $dblink->save();
+        
         return Redirect::route('home');
     }
     function remove($id) {
-        DB::table('links')->where('user_id', Auth::id())->where('id', $id)->delete();
+        $user = User::find(Auth::id());
+        $user->links()->where('id', $id)->delete();
+        
         return Redirect::route('home');
     }
+    
     function update($id, Request $request) {
         $title = $request->input('title');
         $link = $request->input('link');
         $tags = $request->input('tags');
-        $results = DB::table('links')->where('id', $id)->get();
-        if(sizeof($results) <= 0) return 'Link not found';
-        if($results[0]->user_id != Auth::id()) return '<h1>Unauthorized</h1>';
-        DB::table('links')->where('id', $id)->update(['title'=>$title, 'link'=>$link, 'tags'=>$tags]);
+    
+        $dblink = Link::find($id);
+        $dblink->title = $title;
+        $dblink->link = $link;
+        $dblink->tags = $tags;
+        $dblink->save();
+        
         return Redirect::route('home');
     }
 }

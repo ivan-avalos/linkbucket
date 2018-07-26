@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Add link</div>
+                <div class="card-header">Edit link</div>
                 <div class="card-body">
 		    <form action="/update/{{ $link->id }}" method="post">
 			<div class="form-group">
@@ -24,9 +24,9 @@
 			     <input type="text" class="form-control"
 			name="tags" value="{{$link->tags}}" placeholder="Enter space separated tags">
 			</div>
-			<button type="submit" class="btn btn-warning">Edit
+			<button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Edit
 			link</button>
-			<a class="btn btn-primary" href="/home">Back</a>
+			<a class="btn btn-primary" href="/home"><i class="fas fa-arrow-left"></i> Back</a>
 			@csrf
 		    </form>
                 </div>

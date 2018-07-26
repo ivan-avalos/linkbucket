@@ -15,10 +15,10 @@ class CreateLinksTable extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->increments('id');
-	    $table->integer('user_id');
-	    $table->string('title');
-	    $table->string('link');
-	    $table->mediumText('tags');
+    	    $table->integer('user_id');
+    	    $table->string('title');
+    	    $table->string('link');
+    	    $table->mediumText('tags');
             $table->timestamps();
         });
     }
