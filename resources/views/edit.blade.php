@@ -29,7 +29,7 @@
 			<div class="form-group">
 			     <label for="tags">Tags </label>
 			     <input type="text" class="form-control"
-			name="tags" value="{{$link->tags}}" placeholder="Enter space separated tags">
+			name="tags" value="@foreach($link->tags as $tag){{$tag->name.' '}}@endforeach()" placeholder="Enter space separated tags">
 			</div>
 			<button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Edit
 			link</button>

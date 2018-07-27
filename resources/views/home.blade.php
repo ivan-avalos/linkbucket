@@ -35,7 +35,8 @@
                         </div>
                         <div class="form-group">
                             <label for="tags">Tags </label>
-                            <input type="text" class="form-control" name="tags" placeholder="Enter space separated tags">
+                            <input type="text" class="form-control" name="tags" id="tags"
+                                    placeholder="Enter space separated tags">
                         </div>
                         <button type="submit" class="btn btn-primary">
 			<i class="fas fa-plus"></i> Add link</button> @csrf
@@ -86,7 +87,7 @@
 			$link->link }}</i></font>
                     </p>
                     <p>@foreach ($link->tags as $tag)
-                        <a href="/tags/{{$tag}}" class="badge badge-light">{{$tag}}</a> @endforeach
+                        <a href="/tags/{{$tag->name}}" class="badge badge-light">{{$tag->name}}</a> @endforeach
                     </p>
                     <a href="{{ $link->link }}" class="btn btn-primary"><i class="fas fa-reply"></i> Go</a>
                     <a href="/edit/{{$link->id}}" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
@@ -95,11 +96,14 @@
                 </div>
             </div>  
             @endforeach
-            <br> @isset($pagination) @if($pagination)
-            <ul class="pagination">
+            <br> @empty($no_pagination)
+            <ul class="pagination d-flex justify-content-center">
                 {{ $links->links() }}
             </ul>
-            @endif @endisset
+            @endempty
         </div>
     </div>
-    @endsection
+    <script type="text/javascript" >
+        $('.new-tag-input').LovelyTag({hasHashTag: false});
+    </script>
+@endsection

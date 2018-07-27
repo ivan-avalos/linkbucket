@@ -13,7 +13,8 @@ use App\Link;
 class MainController extends Controller
 {
     private function get_website_title($url) {
-        $data = file_get_contents($url);
+        $data = @file_get_contents($url);
+        if($data === FALSE || $data === null) return $url;
         $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : $url;
         return $title;
     }  
@@ -35,7 +36,9 @@ class MainController extends Controller
         $dblink->user_id = Auth::id();
         $dblink->title = $title;
         $dblink->link = $link;
-        $dblink->tags = $tags;
+        // rtconner tags
+        $dblink->save();
+        $dblink->tag(explode(' ', $tags));
         $dblink->save();
         
         return Redirect::route('home');
@@ -60,7 +63,8 @@ class MainController extends Controller
         $dblink = Link::find($id);
         $dblink->title = $title;
         $dblink->link = $link;
-        $dblink->tags = $tags;
+        $dblink->save();
+        $dblink->retag(explode(' ', $tags));
         $dblink->save();
         
         return Redirect::route('home');

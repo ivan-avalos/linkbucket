@@ -32,7 +32,6 @@ class HomeController extends Controller
     {
     	$user = User::find(Auth::id());
     	$links = $user->links()->orderBy('id', 'desc')->simplePaginate(15);
-    	foreach($links as $link) $link->tags = explode(" ", $link->tags);
     	
     	return view('home', ['links'=>$links]);
     }
@@ -47,14 +46,13 @@ class HomeController extends Controller
         $query = $request->input('search');
         
         $user = User::find(Auth::id());
-        $links = $user->links()->orderBy('id', 'desc')
-            ->where('title', 'like', '%'.$query.'%')
-            ->orWhere('link', 'like', '%'.$query.'%')
-            ->orWhere('tags', 'like', '%'.$query.'%')
-            ->simplePaginate(15);
-        foreach($links as $link) $link->tags = explode(" ", $link->tags); 
         
-    	return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>'Search: '.$query, 'back'=>true]);
+        $links = $user->links()
+            ->where('title', 'like', "%{$query}%")
+            ->orderBy('id', 'desc')
+            ->simplePaginate(15);
+        
+    	return view('home', ['links'=>$links->appends($request->all()), 'no_add'=>true, 'title'=>'Search: '.$query, 'back'=>true]);
     }
     
     public function edit($id)
@@ -66,15 +64,10 @@ class HomeController extends Controller
     }
 
     public function tags($tag){
-        $user = User::find(Auth::id());
-    	$links = $user->links()->orderBy('id', 'desc')->get();
-    	$filtered = [];
-    	foreach($links as $link) {
-    	    $link->tags = explode(" ", $link->tags);
-    	    if(in_array($tag, $link->tags))
-    	       array_push($filtered, $link);
-    	}
-    	return view('home', ['links'=>$filtered, 'no_add'=>true, 'pagination'=>false,
+    	$user = User::find(Auth::id());
+    	$links = $user->links()->withAnyTag($tag)->orderBy('id', 'desc')->simplePaginate(15);
+    	
+        return view('home', ['links'=>$links, 'no_add'=>true,
     	'title'=>'Tag: '.$tag, 'back'=>true]);
     }	
 }
