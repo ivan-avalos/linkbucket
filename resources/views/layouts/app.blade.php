@@ -57,6 +57,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                
+                                    <!-- Import from Pocket -->
+                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#import">
+                                        Import from Pocket
+                                    </button>
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -74,9 +80,64 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
+        <main class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-12 col-sm-12">
+                    @yield('content')
+                </div>
+            </div>
         </main>
     </div>
+    
+    <footer>
+        <div class="container py-5">
+            <p class="mb-0 text-uppercase font-weight-bold small text-justify">
+                <a href="/site/about" class="text-primary pr-3">About</a>
+                <!--<a href="https://pixelfed.social/site/help" class="text-primary pr-3">Support</a>-->
+                <a href="/site/open-source" class="text-primary pr-3">Open Source</a>
+                <!--<a href="https://pixelfed.social/site/terms" class="text-primary pr-3">Terms</a>-->
+                <!--<a href="https://pixelfed.social/site/privacy" class="text-primary pr-3">Privacy</a>-->
+                <a href="/site/platform" class="text-primary pr-3">API</a>
+                <!--<a href="#" class="text-primary pr-3">Directory</a>-->
+                <!--<a href="#" class="text-primary pr-3">Profiles</a>-->
+                <!--<a href="#" class="text-primary pr-3">Hashtags</a>-->
+                <!--<a href="https://pixelfed.social/site/language" class="text-primary pr-3">Language</a>-->
+                <a href="https://github.com/ivan-avalos/linkbucket" class="text-muted float-right" rel="noopener">Powered by Linkbucket</a>
+                </p>
+        </div>
+    </footer>
+    
+    <!-- Import modal -->
+    <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="importLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importLabel">Import</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Importing bookmarks is an asynchronous task. That means that, after you are redirected to home,
+                    you will have to refresh in a while in order to see all the bookmarks. That "while" will depend
+                    in how many bookmarks you are importing.</p>
+                    <p>Proceed with import?</p>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <i class="fas fa-ban"></i> Cancel</button>
+                    <a class="btn btn-danger" href="/import">
+                        <i class="fas fa-download"></i> Import</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" >
+        $('#import').modal();
+    </script>
 </body>
 </html>

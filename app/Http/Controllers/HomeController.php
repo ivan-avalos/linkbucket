@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index()
     {
     	$user = User::find(Auth::id());
-    	$links = $user->links()->orderBy('id', 'desc')->simplePaginate(15);
+    	$links = $user->links()->orderBy('id', 'desc')->paginate(15);
     	
     	return view('home', ['links'=>$links]);
     }
@@ -70,4 +70,16 @@ class HomeController extends Controller
         return view('home', ['links'=>$links, 'no_add'=>true,
     	'title'=>'Tag: '.$tag, 'back'=>true]);
     }	
+    
+    public function site_about() {
+        return view('site/about');
+    }
+    
+    public function site_oss() {
+        return view('site/open-source');
+    }
+    
+    public function site_api() {
+        return view('site/api');
+    }
 }

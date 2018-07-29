@@ -5,6 +5,16 @@ Linkbucket is the free and open-source alternative to Pocket
 your bookmarks in the cloud and access to them from any device. It's useful to
 backup important links and manage them easily.
 
+Features
+========
+- Easy to install and use.
+- Login and register users.
+- Import your bookmarks from Pocket (asynchronously).
+- Add, edit and delete bookmarks.
+- Categorize bookmarks with tags.
+- Search functionality.
+and more!
+
 Free and open-source
 ====================
 Linkbucket is distributed under the terms of the GNU Aferro General Public
@@ -15,11 +25,18 @@ Laravel Framework
 This project was made using the PHP Laravel Framework, making it easier to
 install and configure.
 
+Import from Pocket
+==================
+To import bookmarks from Pocket, you need to get a Pocket consumer key from
+<https://getpocket.com/developer/docs/overview> and set POCKET_CONSUMER_KEY and
+APP_URL in the .env file.
+
 Installation
 ============-
 - composer install
 - cp .env.example .env
-  complete .env values (optional)
+* complete .env values
 - php artisan key:generate 
 - php artisan migrate
+- php artisan queue:work (optionally configure supervisor)
 - php artisan serve --port=8000 --host=localhost &
