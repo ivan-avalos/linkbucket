@@ -44,9 +44,7 @@ class MainController extends Controller
         return Redirect::route('home');
     }
     function remove($id) {
-        $user = User::find(Auth::id());
-        $user->links()->where('id', $id)->delete();
-        
+        Link::find($id)->delete();
         return Redirect::route('home');
     }
     

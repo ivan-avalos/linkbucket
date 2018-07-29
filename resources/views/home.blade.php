@@ -102,11 +102,11 @@
                 </a>
                     
                 <!-- Delete button -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{$link->id}}">
                     <i class="fas fa-trash"></i> {{ __('home.link.delete.delete') }}
                 </button>
                 <!-- Delete modal -->
-                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
+                <div class="modal fade" id="delete{{$link->id}}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
