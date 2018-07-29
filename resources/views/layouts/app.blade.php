@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Linkbucket') }} - @yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -27,7 +27,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Linkbucket') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -60,7 +60,7 @@
                                 
                                     <!-- Import from Pocket -->
                                     <button type="button" class="dropdown-item" data-toggle="modal" data-target="#import">
-                                        Import from Pocket
+                                        {{ __('app.import.label') }}
                                     </button>
                                     
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -79,6 +79,33 @@
                 </div>
             </div>
         </nav>
+        
+        <!-- Import modal -->
+        <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="importLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="importLabel">{{ __('app.import.modal.header') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        {!! __('app.import.modal.body') !!}
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            <i class="fas fa-ban"></i> {{ __('app.import.modal.footer.cancel') }}</button>
+                        <a class="btn btn-danger" href="/import">
+                            <i class="fas fa-download"></i> {{ __('app.import.modal.footer.import') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <main class="container py-4">
             <div class="row justify-content-center">
@@ -92,50 +119,20 @@
     <footer>
         <div class="container py-5">
             <p class="mb-0 text-uppercase font-weight-bold small text-justify">
-                <a href="/site/about" class="text-primary pr-3">About</a>
+                <a href="/site/about" class="text-primary pr-3">{{ __('app.footer.about') }}</a>
                 <!--<a href="https://pixelfed.social/site/help" class="text-primary pr-3">Support</a>-->
-                <a href="/site/open-source" class="text-primary pr-3">Open Source</a>
-                <!--<a href="https://pixelfed.social/site/terms" class="text-primary pr-3">Terms</a>-->
-                <!--<a href="https://pixelfed.social/site/privacy" class="text-primary pr-3">Privacy</a>-->
-                <a href="/site/platform" class="text-primary pr-3">API</a>
+                <a href="/site/open-source" class="text-primary pr-3">{{ __('app.footer.open-source') }}</a>
+                <a href="/site/terms" class="text-primary pr-3"> {{ __('app.footer.terms') }} </a>
+                <a href="/site/privacy" class="text-primary pr-3"> {{ __('app.footer.privacy') }} </a>
+                <a href="/site/platform" class="text-primary pr-3">{{ __('app.footer.api') }}</a>
                 <!--<a href="#" class="text-primary pr-3">Directory</a>-->
                 <!--<a href="#" class="text-primary pr-3">Profiles</a>-->
                 <!--<a href="#" class="text-primary pr-3">Hashtags</a>-->
                 <!--<a href="https://pixelfed.social/site/language" class="text-primary pr-3">Language</a>-->
-                <a href="https://github.com/ivan-avalos/linkbucket" class="text-muted float-right" rel="noopener">Powered by Linkbucket</a>
+                <a href="https://github.com/ivan-avalos/linkbucket" class="text-muted float-right" rel="noopener">{{ __('app.footer.powered') }}</a>
                 </p>
         </div>
     </footer>
-    
-    <!-- Import modal -->
-    <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="importLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <!-- Modal header -->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importLabel">Import</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <p>Importing bookmarks is an asynchronous task. That means that, after you are redirected to home,
-                    you will have to refresh in a while in order to see all the bookmarks. That "while" will depend
-                    in how many bookmarks you are importing.</p>
-                    <p>Proceed with import?</p>
-                </div>
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
-                        <i class="fas fa-ban"></i> Cancel</button>
-                    <a class="btn btn-danger" href="/import">
-                        <i class="fas fa-download"></i> Import</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <script type="text/javascript" >
         $('#import').modal();
     </script>

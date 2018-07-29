@@ -27,7 +27,10 @@ Route::get('/search', 'HomeController@search')->middleware('auth');
 
 // Information views
 Route::get('/site/about', 'HomeController@site_about');
+Route::get('/site/features', 'HomeController@site_features');
 Route::get('/site/open-source', 'HomeController@site_oss');
+Route::get('/site/terms', 'HomeController@site_terms');
+Route::get('/site/privacy', 'HomeController@site_privacy');
 Route::get('/site/api', 'HomeController@site_api');
 
 // DB Functions
