@@ -124,7 +124,7 @@
                 <a href="/site/open-source" class="text-primary pr-3">{{ __('app.footer.open-source') }}</a>
                 <a href="/site/terms" class="text-primary pr-3"> {{ __('app.footer.terms') }} </a>
                 <a href="/site/privacy" class="text-primary pr-3"> {{ __('app.footer.privacy') }} </a>
-                <a href="/site/platform" class="text-primary pr-3">{{ __('app.footer.api') }}</a>
+                <a href="/site/api" class="text-primary pr-3">{{ __('app.footer.api') }}</a>
                 <!--<a href="#" class="text-primary pr-3">Directory</a>-->
                 <!--<a href="#" class="text-primary pr-3">Profiles</a>-->
                 <!--<a href="#" class="text-primary pr-3">Hashtags</a>-->

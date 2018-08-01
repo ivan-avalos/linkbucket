@@ -7,3 +7,7 @@
 @section('stitle')
 {{ __('site.sidebar.platform') }}
 @stop
+
+@section('scontent')
+{!! __('site.content.platform') !!}
+@stop
