@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+{{ __('Register') }}
+@stop
+
 @section('content')
 <div class="card">
     <div class="card-header">{{ __('Register') }}</div>

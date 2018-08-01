@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+{{ __('home.home') }}
+@stop
+
 @section('content')
 
 @empty($no_add)
@@ -89,7 +93,9 @@
                 <!-- Tags -->
                 <p class="card-text">
                     @foreach ($link->tags as $tag)
-                        <a href="/tags/{{$tag->name}}" class="badge badge-light">{{$tag->name}}</a>
+                        @if($tag)
+                            <a href="/tags/{{$tag->name}}" class="badge badge-light">{{$tag->name}}</a>
+                        @endif
                     @endforeach
                 </p>
                 <!-- Go -->

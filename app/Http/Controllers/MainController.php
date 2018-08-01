@@ -44,7 +44,8 @@ class MainController extends Controller
         return Redirect::route('home');
     }
     function remove($id) {
-        Link::find($id)->delete();
+        $user = User::find(Auth::id());
+        $user->links()->findOrFail($id)->delete();
         return Redirect::route('home');
     }
     
@@ -58,7 +59,8 @@ class MainController extends Controller
         $link = $request->input('link');
         $tags = $request->input('tags');
     
-        $dblink = Link::find($id);
+        $user = User::find(Auth::id());
+        $dblink = $user->links()->findOrFail($id);
         $dblink->title = $title;
         $dblink->link = $link;
         $dblink->save();

@@ -26,12 +26,12 @@ Route::get('/tags/{tag}', 'HomeController@tags')->middleware('auth');
 Route::get('/search', 'HomeController@search')->middleware('auth');
 
 // Information views
-Route::get('/site/about', 'HomeController@site_about');
-Route::get('/site/features', 'HomeController@site_features');
-Route::get('/site/open-source', 'HomeController@site_oss');
-Route::get('/site/terms', 'HomeController@site_terms');
-Route::get('/site/privacy', 'HomeController@site_privacy');
-Route::get('/site/api', 'HomeController@site_api');
+Route::get('/site/about', 'Controller@site_about');
+Route::get('/site/features', 'Controller@site_features');
+Route::get('/site/open-source', 'Controller@site_oss');
+Route::get('/site/terms', 'Controller@site_terms');
+Route::get('/site/privacy', 'Controller@site_privacy');
+Route::get('/site/api', 'Controller@site_api');
 
 // DB Functions
 Route::post('/add', 'MainController@add')->middleware('auth');

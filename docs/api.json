@@ -1,0 +1,395 @@
+{
+    "title":"Linkbucket API [experimental]",
+    "description":
+"<p>Retrieve, add, modify and delete links from Linkbucket with easy to use JSON API.</p><p><b>Important:</b> Please don't forget about headers when making requests, because back-end will only return JSON encoded errors and messages when <code>Accept</code> header is set to <code>application/json</code>.</p><b>Important:</b> Error responses will include a <i>\"message\"</i> key when <code>Accept</code> header is set to <code>application/json</code>.</p>",
+    "host":"http://linkbucket.robotronica.mx",
+    "requests":[
+        {
+            "title":"Register a user",
+            "method":"POST",
+            "description":"Register a user and get an api token.",
+            "url":"/api/register",
+            "parameters":[
+                {"name":"name", "type":"string", "optional":false, "description":"Name of the user to register."},
+                {"name":"email", "type":"string", "optional":false, "description":"Email of the user to register."},
+                {"name":"password", "type":"string", "optional":false, "description":"Password of the user to register."},
+                {"name":"password_confirmation", "type":"string", "optional":false, "description":"Password confirmation of the user to register."}
+            ],
+            "examples":[
+                {
+                    "description":"Example register request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":[
+                        "name=Juan&",
+                        "email=juan@doe.mx&",
+                        "password=password123&",
+                        "password_confirmation=password123"]
+                },
+                {
+                    "description":"Example register response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"},
+                        {"key":"Status", "value":"200 OK"}
+                    ],
+                    "body":[
+                        "{",
+                        "&emsp;\"data\":{",
+                        "&emsp;&emsp;\"name\":\"Juan\"",
+                        "&emsp;&emsp;\"email\":\"juan@doe.mx\"",
+                        "&emsp;&emsp;\"updated_at\":\"2018-07-31 01:56:44\"",
+                        "&emsp;&emsp;\"created_at\":\"2018-07-31 01:56:44\"",
+                        "&emsp;&emsp;\"id\":1",
+                        "&emsp;&emsp;\"api_token\":\"MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK\"",
+                        "&emsp;}",
+                        "}"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Login existing user",
+            "method":"POST",
+            "description":"Login existing user and get an api token.",
+            "url":"/api/login",
+            "parameters":[
+                {"name":"email", "type":"string", "optional":false, "description":"Email of existing user"},
+                {"name":"password", "type":"string", "optional":false, "description":"Password of existing user"}
+            ],
+            "examples":[
+                {
+                    "description":"Example login request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":[
+                        "email=juan@doe.mx&",
+                        "password=password123&"]
+                },
+                {
+                    "description":"Example login response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"},
+                        {"key":"Status", "value":"200 OK"}
+                    ],
+                    "body":[
+                        "{",
+                        "&emsp;\"data\":{",
+                        "&emsp;&emsp;\"name\":\"Juan\"",
+                        "&emsp;&emsp;\"email\":\"juan@doe.mx\"",
+                        "&emsp;&emsp;\"updated_at\":\"2018-07-31 01:56:44\"",
+                        "&emsp;&emsp;\"created_at\":\"2018-07-31 01:56:44\"",
+                        "&emsp;&emsp;\"id\":1",
+                        "&emsp;&emsp;\"api_token\":\"MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK\"",
+                        "&emsp;}",
+                        "}"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Retrieving all links from user",
+            "method":"GET",
+            "description":"Get a list with all links from authenticated user.",
+            "url":"/api/retrieve",
+            "parameters":[
+                {"name":"api_token", "type":"string", "optional":false, "description":"API token obtained in login."}
+            ],
+            "examples":[
+                {
+                    "description":"Example retrieve request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":"api_key=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK"
+                },
+                {
+                    "description":"Example retrieve response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"}
+                    ],
+                    "body":[
+                        "[",
+                        "&emsp;{",
+                        "&emsp;&emsp;\"id\": 336,",
+                        "&emsp;&emsp;\"user_id\": 3,",
+                        "&emsp;&emsp;\"title\": \"DuckDuckGo\",",
+                        "&emsp;&emsp;\"link\": \"https://duckduckgo.com/lite\",",
+                        "&emsp;&emsp;\"created_at\": \"2018-07-31 03:43:36\",",
+                        "&emsp;&emsp;\"updated_at\": \"2018-07-31 03:43:36\",",
+                        "&emsp;&emsp;\"taggs\": [",
+                        "&emsp;&emsp;&emsp;\"Search\",",
+                        "&emsp;&emsp;&emsp;\"Privacy\",",
+                        "&emsp;&emsp;&emsp;\"Lite\"",
+                        "&emsp;&emsp;]",
+                        "&emsp;}",
+                        "]"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Retrieve single link from user",
+            "method":"GET",
+            "description":"Get single link from authenticated user",
+            "url":"/api/retrieve/{id}",
+            "parameters":[
+                {"name":"api_token", "type":"string", "optional":false, "description":"API token obtained in login."}
+            ],
+            "examples":[
+                {
+                    "description":"Example single retrieve request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":"api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK"
+                },
+                {
+                    "description":"Example single retrieve response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"}
+                    ],
+                    "body":[
+                        "{",
+                        "&emsp;\"id\": 336,",
+                        "&emsp;\"user_id\": 3,",
+                        "&emsp;\"title\": \"DuckDuckGo\",",
+                        "&emsp;\"link\": \"https://duckduckgo.com/lite\",",
+                        "&emsp;\"created_at\": \"2018-07-31 03:43:36\",",
+                        "&emsp;\"updated_at\": \"2018-07-31 03:43:36\",",
+                        "&emsp;\"taggs\": [",
+                        "&emsp;&emsp;\"Search\",",
+                        "&emsp;&emsp;\"Privacy\",",
+                        "&emsp;&emsp;\"Lite\"",
+                        "&emsp;]",
+                        "}"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Add a link",
+            "method":"POST",
+            "description":"Add a link with tags",
+            "url":"/api/add",
+            "parameters":[
+                {"name":"api_token", "type":"string", "optional":false, "description":"API token obtained in login"},
+                {"name":"link", "type":"string", "optional":false, "description":"URL of the link."},
+                {"name":"tags", "type":"string", "optional":true, "description":"Space separated tags related with the link."}
+            ],
+            "examples":[
+                {
+                    "description":"Example of add request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":[
+                        "api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK&",
+                        "link=https://peertube.social/&",
+                        "tags=streaming%20free%20open-source%20peer2peer"
+                    ]
+                },
+                {
+                    "description":"Example of add response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"},
+                        {"key":"Status", "value":"200 OK"}
+                    ],
+                    "body":[
+                        "{",
+                        "&emsp;\"id\": 339,",
+                        "&emsp;\"user_id\": 3,",
+                        "&emsp;\"title\": \"peertube.social\",",
+                        "&emsp;\"link\": \"https://peertube.social/\",",
+                        "&emsp;\"created_at\": \"2018-07-31 22:41:18\",",
+                        "&emsp;\"updated_at\": \"2018-07-31 22:41:18\",",
+                        "&emsp;\"taggs\": [",
+                        "&emsp;&emsp;\"Streaming\",",
+                        "&emsp;&emsp;\"Free\",",
+                        "&emsp;&emsp;\"Open-Source\",",
+                        "&emsp;&emsp;\"Peer2Peer\"",
+                        "&emsp;]",
+                        "}"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Modify an existing link",
+            "method":"POST",
+            "description":"Edit an existing link from authenticated user.",
+            "url":"/api/edit/{id}",
+            "parameters":[
+                {"name":"api_token", "type":"string", "optional":false, "description":"API token obtained in login"},
+                {"name":"title", "type":"string", "optional":false, "description":"New title for link (can remain the same)"},
+                {"name":"link", "type":"string", "optional":false, "description":"New URL for link (can remain the same)"},
+                {"name":"tags", "type":"string", "optional":false, "description":"New space separated tags for link (can remain the same)"}
+            ],
+            "examples":[
+                {
+                    "description":"Example of edit request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":[
+                        "api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK&",
+                        "title=NSA%20Peertube&",
+                        "link=https://peertube.nsa.ovh/&",
+                        "tags=streaming%20free%20open-source%20peer2peer"
+                    ]
+                },
+                {
+                    "description":"Example of edit response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"},
+                        {"key":"Status", "value":"200 OK"}
+                    ],
+                    "body":[
+                        "{",
+                        "&emsp;\"id\": 339,",
+                        "&emsp;\"user_id\": 3,",
+                        "&emsp;\"title\": \"NSA Peertube\",",
+                        "&emsp;\"link\": \"https://peertube.nsa.ovh/\",",
+                        "&emsp;\"created_at\": \"2018-07-31 22:41:18\",",
+                        "&emsp;\"updated_at\": \"2018-07-31 23:02:27\",",
+                        "&emsp;\"taggs\": [",
+                        "&emsp;&emsp;\"Streaming\",",
+                        "&emsp;&emsp;\"Free\",",
+                        "&emsp;&emsp;\"Open-Source\",",
+                        "&emsp;&emsp;\"Peer2Peer\"",
+                        "&emsp;]",
+                        "}"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Delete link",
+            "method":"POST",
+            "description":"Delete an existing link of authenticated user.",
+            "url":"/api/delete/{id}",
+            "parameters":[
+                {"name":"api_token", "type":"string", "optional":false, "description":"API token obtained in login"}
+            ],
+            "examples":[
+                {
+                    "description":"Example of delete request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":"api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK"
+                },
+                {
+                    "description":"Example of delete response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"},
+                        {"key":"Status", "value":"200 OK"}
+                    ],
+                    "body":[
+                        "{",
+                        "&emsp;\"id\": 339,",
+                        "&emsp;\"user_id\": 3,",
+                        "&emsp;\"title\": \"NSA Peertube\",",
+                        "&emsp;\"link\": \"https://peertube.nsa.ovh/\",",
+                        "&emsp;\"created_at\": \"2018-07-31 22:41:18\",",
+                        "&emsp;\"updated_at\": \"2018-07-31 23:02:27\",",
+                        "&emsp;\"taggs\": [",
+                        "&emsp;&emsp;\"Streaming\",",
+                        "&emsp;&emsp;\"Free\",",
+                        "&emsp;&emsp;\"Open-Source\",",
+                        "&emsp;&emsp;\"Peer2Peer\"",
+                        "&emsp;]",
+                        "}"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Logout user and delete token",
+            "method":"POST",
+            "description":"Logout user and make current API token invalid.",
+            "url":"/api/logout",
+            "parameters":[
+                {"name":"api_token", "type":"string", "optional":false, "description":"API token obtained in login"}
+            ],
+            "examples":[
+                {
+                    "description":"Example of logout request",
+                    "type":"request",
+                    "method":"POST",
+                    "protocol":"HTTP/1.1",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/x-www-form-urlencoded"},
+                        {"key":"Accept", "value":"application/json"}
+                    ],
+                    "body":"api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK"
+                },
+                {
+                    "description":"Example of logout response",
+                    "type":"response",
+                    "protocol":"HTTP/1.1",
+                    "status":"200 OK",
+                    "headers":[
+                        {"key":"Content-Type", "value":"application/json"},
+                        {"key":"Status", "value":"200 OK"}
+                    ],
+                    "body":[
+                        "{",
+                        "&emsp;\"data\": \"User logged out.\"",
+                        "}"
+                    ]
+                }
+            ]
+        }
+    ]
+}

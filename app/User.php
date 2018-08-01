@@ -31,4 +31,12 @@ class User extends Authenticatable
     public function links() {
         return $this->hasMany('App\Link');
     }
+    
+    public function generateToken()
+    {
+        $this->api_token = str_random(60);
+        $this->save();
+
+        return $this->api_token;
+    }
 }

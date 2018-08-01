@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'home'=>'Home',
     'link'=>[
         'add'=>'Add link',
         'link'=>[

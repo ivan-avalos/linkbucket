@@ -1,7 +1,10 @@
 <?php
 
 return [
-    'edit'=>'Edit link',
+    'edit'=>[
+        'title'=>'Edit',
+        'label'=>'Edit link'
+    ],
     'title'=>[
         'label'=>'Title',
         'placeholder'=>'Example website'

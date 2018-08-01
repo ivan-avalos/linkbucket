@@ -50,18 +50,17 @@ class HomeController extends Controller
         $links = $user->links()
             ->where('title', 'like', "%{$query}%")
             ->orderBy('id', 'desc')
-            ->paginate(15);
+            ->paginate(15)
+            ->appends($request->all());
             
         $_title = Lang::get('home.title.search', ['query'=>$query]);
-    	return view('home', ['links'=>$links->appends($request->all()), 'no_add'=>true, 'title'=>$_title, 'back'=>true]);
+    	return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>$_title, 'back'=>true]);
     }
     
     public function edit($id)
     {
-    	$user = User::find(Auth::id());
-    	$link = @$user->links()->where('id', $id)->get()[0];
-    	if($link) return view('edit', ['link'=>$link]);
-    	else return '<h1>Link not found</h1>';
+        $link = Link::findOrFail($id);
+    	return view('edit', ['link'=>$link]);
     }
 
     public function tags($tag){
@@ -69,15 +68,6 @@ class HomeController extends Controller
     	$links = $user->links()->withAnyTag($tag)->orderBy('id', 'desc')->paginate(15);
     	
     	$_title = Lang::get('home.title.tags', ['tag'=>$tag]);
-        return view('home', ['links'=>$links, 'no_add'=>true,
-    	'title'=>$_title, 'back'=>true]);
-    }	
-    
-    // Site info
-    public function site_about() { return view('site/about'); }
-    public function site_features() { return view('site/features'); }
-    public function site_oss() { return view('site/open-source'); }
-    public function site_terms() { return view('site/terms'); }    
-    public function site_privacy() { return view('site/privacy'); }
-    public function site_api() { return view('site/api'); }
+        return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>$_title, 'back'=>true]);
+    }
 }

@@ -1,0 +1,1225 @@
+<html>
+    <head>
+        <title>
+            Linkbucket API [experimental]
+        </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
+        </link>
+    </head>
+    <body style="background: #f5f8fa">
+        <div class="container">
+            <h1 class="mt-3">
+                Linkbucket API [experimental]
+            </h1>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p>
+                        Retrieve, add, modify and delete links from Linkbucket with easy to use JSON API.
+                    </p>
+                    <p>
+                        <b>
+                            Important:
+                        </b>
+                        Please don't forget about headers when making requests, because back-end will only return JSON encoded errors and messages when
+                        <code>
+                            Accept
+                        </code>
+                        header is set to
+                        <code>
+                            application/json
+                        </code>
+                        .
+                    </p>
+                    <b>
+                        Important:
+                    </b>
+                    Error responses will include a
+                    <i>
+                        "message"
+                    </i>
+                    key when
+                    <code>
+                        Accept
+                    </code>
+                    header is set to
+                    <code>
+                        application/json
+                    </code>
+                    .
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Register a user
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Register a user and get an api token.
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                POST
+                            </b>
+                            http://linkbucket.robotronica.mx/api/register
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    name
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    Name of the user to register.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    email
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    Email of the user to register.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    password
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    Password of the user to register.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    password_confirmation
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    Password confirmation of the user to register.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example register request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/register
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    name=Juan&
+email=juan@doe.mx&
+password=password123&
+password_confirmation=password123
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example register response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Status: 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    {
+&emsp;"data":{
+&emsp;&emsp;"name":"Juan"
+&emsp;&emsp;"email":"juan@doe.mx"
+&emsp;&emsp;"updated_at":"2018-07-31 01:56:44"
+&emsp;&emsp;"created_at":"2018-07-31 01:56:44"
+&emsp;&emsp;"id":1
+&emsp;&emsp;"api_token":"MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK"
+&emsp;}
+}
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Login existing user
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Login existing user and get an api token.
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                POST
+                            </b>
+                            http://linkbucket.robotronica.mx/api/login
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    email
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    Email of existing user
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    password
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    Password of existing user
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example login request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/login
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    email=juan@doe.mx&
+password=password123&
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example login response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Status: 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    {
+&emsp;"data":{
+&emsp;&emsp;"name":"Juan"
+&emsp;&emsp;"email":"juan@doe.mx"
+&emsp;&emsp;"updated_at":"2018-07-31 01:56:44"
+&emsp;&emsp;"created_at":"2018-07-31 01:56:44"
+&emsp;&emsp;"id":1
+&emsp;&emsp;"api_token":"MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK"
+&emsp;}
+}
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Retrieving all links from user
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Get a list with all links from authenticated user.
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                GET
+                            </b>
+                            http://linkbucket.robotronica.mx/api/retrieve
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    api_token
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    API token obtained in login.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example retrieve request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/retrieve
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    api_key=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example retrieve response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    [
+&emsp;{
+&emsp;&emsp;"id": 336,
+&emsp;&emsp;"user_id": 3,
+&emsp;&emsp;"title": "DuckDuckGo",
+&emsp;&emsp;"link": "https://duckduckgo.com/lite",
+&emsp;&emsp;"created_at": "2018-07-31 03:43:36",
+&emsp;&emsp;"updated_at": "2018-07-31 03:43:36",
+&emsp;&emsp;"taggs": [
+&emsp;&emsp;&emsp;"Search",
+&emsp;&emsp;&emsp;"Privacy",
+&emsp;&emsp;&emsp;"Lite"
+&emsp;&emsp;]
+&emsp;}
+]
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Retrieve single link from user
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Get single link from authenticated user
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                GET
+                            </b>
+                            http://linkbucket.robotronica.mx/api/retrieve/{id}
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    api_token
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    API token obtained in login.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example single retrieve request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/retrieve/{id}
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example single retrieve response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    {
+&emsp;"id": 336,
+&emsp;"user_id": 3,
+&emsp;"title": "DuckDuckGo",
+&emsp;"link": "https://duckduckgo.com/lite",
+&emsp;"created_at": "2018-07-31 03:43:36",
+&emsp;"updated_at": "2018-07-31 03:43:36",
+&emsp;"taggs": [
+&emsp;&emsp;"Search",
+&emsp;&emsp;"Privacy",
+&emsp;&emsp;"Lite"
+&emsp;]
+}
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Add a link
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Add a link with tags
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                POST
+                            </b>
+                            http://linkbucket.robotronica.mx/api/add
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    api_token
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    API token obtained in login
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    link
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    URL of the link.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    tags
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    True
+                                </td>
+                                <td>
+                                    Space separated tags related with the link.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example of add request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/add
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK&
+link=https://peertube.social/&
+tags=streaming%20free%20open-source%20peer2peer
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example of add response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Status: 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    {
+&emsp;"id": 339,
+&emsp;"user_id": 3,
+&emsp;"title": "peertube.social",
+&emsp;"link": "https://peertube.social/",
+&emsp;"created_at": "2018-07-31 22:41:18",
+&emsp;"updated_at": "2018-07-31 22:41:18",
+&emsp;"taggs": [
+&emsp;&emsp;"Streaming",
+&emsp;&emsp;"Free",
+&emsp;&emsp;"Open-Source",
+&emsp;&emsp;"Peer2Peer"
+&emsp;]
+}
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Modify an existing link
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Edit an existing link from authenticated user.
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                POST
+                            </b>
+                            http://linkbucket.robotronica.mx/api/edit/{id}
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    api_token
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    API token obtained in login
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    title
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    New title for link (can remain the same)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    link
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    New URL for link (can remain the same)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    tags
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    New space separated tags for link (can remain the same)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example of edit request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/edit/{id}
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK&
+title=NSA%20Peertube&
+link=https://peertube.nsa.ovh/&
+tags=streaming%20free%20open-source%20peer2peer
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example of edit response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Status: 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    {
+&emsp;"id": 339,
+&emsp;"user_id": 3,
+&emsp;"title": "NSA Peertube",
+&emsp;"link": "https://peertube.nsa.ovh/",
+&emsp;"created_at": "2018-07-31 22:41:18",
+&emsp;"updated_at": "2018-07-31 23:02:27",
+&emsp;"taggs": [
+&emsp;&emsp;"Streaming",
+&emsp;&emsp;"Free",
+&emsp;&emsp;"Open-Source",
+&emsp;&emsp;"Peer2Peer"
+&emsp;]
+}
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Delete link
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Delete an existing link of authenticated user.
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                POST
+                            </b>
+                            http://linkbucket.robotronica.mx/api/delete/{id}
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    api_token
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    API token obtained in login
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example of delete request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/delete/{id}
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example of delete response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Status: 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    {
+&emsp;"id": 339,
+&emsp;"user_id": 3,
+&emsp;"title": "NSA Peertube",
+&emsp;"link": "https://peertube.nsa.ovh/",
+&emsp;"created_at": "2018-07-31 22:41:18",
+&emsp;"updated_at": "2018-07-31 23:02:27",
+&emsp;"taggs": [
+&emsp;&emsp;"Streaming",
+&emsp;&emsp;"Free",
+&emsp;&emsp;"Open-Source",
+&emsp;&emsp;"Peer2Peer"
+&emsp;]
+}
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <h5 class="card-header">
+                    Logout user and delete token
+                </h5>
+                <div class="card-body">
+                    <p>
+                        Logout user and make current API token invalid.
+                    </p>
+                    <h5>
+                        URL:
+                    </h5>
+                    <p>
+                        <code>
+                            <b>
+                                POST
+                            </b>
+                            http://linkbucket.robotronica.mx/api/logout
+                        </code>
+                    </p>
+                    <h5>
+                        Parameters
+                    </h5>
+                    <table class="table table-bordered parameter">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Optional
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    api_token
+                                </td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    False
+                                </td>
+                                <td>
+                                    API token obtained in login
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>
+                        Examples:
+                    </h5>
+                    <p>
+                        Example of logout request
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                POST
+                                <b>
+                                    /api/logout
+                                </b>
+                                HTTP/1.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/x-www-form-urlencoded
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Accept: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    api_token=MJCx3tNbpDBjXMpEI3rU6puWLqjygE1n9pNah79qej3h1TEMvGLmkRpjnwpK
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Example of logout response
+                    </p>
+                    <table style="font-family: monospace" class="table table-sm table-borderless table-dark example">
+                        <tr>
+                            <td>
+                                HTTP/1.1 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Content-Type: application/json
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Status: 200 OK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code style="display:block; white-space: pre-line;">
+                                    {
+&emsp;"data": "User logged out."
+}
+                                </code>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container py-5">
+                <p class="mb-0 text-uppercase font-weight-bold small text-justify">
+                    <a href="https://github.com/ivan-avalos/api-documenter" class="text-muted float-right" rel="noopener">
+                        Documentation generated with api-documenter
+                    </a>
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

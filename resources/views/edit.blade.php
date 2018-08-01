@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
+@section('title')
+{{ __('edit.edit.title') }}
+@stop
+
 @section('content')
 
 <div class="card">
-    <div class="card-header">{{ __('edit.edit') }}</div>
+    <div class="card-header">{{ __('edit.edit.label') }}</div>
     <div class="card-body">
         @if ($errors->any())
             @foreach ($errors->all() as $error)
@@ -27,7 +31,7 @@
                  <label for="tags">{{ __('edit.tags.label') }}</label>
                  <input type="text" class="form-control" name="tags" value="@foreach($link->tags as $tag){{$tag->name.' '}}@endforeach()" placeholder="{{ __('edit.tags.placeholder') }}">
             </div>
-            <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> {{ __('edit.edit') }}</button>
+            <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> {{ __('edit.edit.label') }}</button>
             <a class="btn btn-primary" href="/home"><i class="fas fa-arrow-left"></i> {{ __('edit.back') }}</a>
         </form>
     </div>
