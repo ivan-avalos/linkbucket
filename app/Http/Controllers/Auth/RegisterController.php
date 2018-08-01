@@ -93,11 +93,11 @@ class RegisterController extends Controller
         // registered() method or it returns null, redirect him to
         // some other URL. In our case, we just need to implement
         // that method to return the correct response.
-        return $this->registered($request, $user)
+        return $this->_registered($request, $user)
                         ?: redirect($this->redirectTo());
     }
     
-    protected function registered(Request $request, $user)
+    protected function _registered(Request $request, $user)
     {
         $user->generateToken();
     
