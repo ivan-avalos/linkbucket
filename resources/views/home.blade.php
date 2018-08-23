@@ -94,7 +94,7 @@
                 <p class="card-text">
                     @foreach ($link->tags as $tag)
                         @if($tag)
-                            <a href="/tags/{{$tag->name}}" class="badge badge-light">{{$tag->name}}</a>
+                            <a href='/tags/{{ str_replace("/", "%5c", $tag->name) }}' class="badge badge-light">{{$tag->name}}</a>
                         @endif
                     @endforeach
                 </p>
