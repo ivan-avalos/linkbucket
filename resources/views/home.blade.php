@@ -9,7 +9,7 @@
 @empty($no_add)
     <!-- STARTS ADD-LINK  -->
     <div class="card" style="margin-bottom:10px;">
-        <div class="card-header">{{ __('home.link.add') }}</div>
+        <h5 class="card-header">{{ __('home.link.add') }}</h5>
     
         <div class="card-body">
             @if (session('status'))
@@ -46,7 +46,7 @@
     
     <!-- STARTS SEARCH -->
     <div class="card" style="margin-bottom:30px;">
-        <div class="card-header">{{ __('home.search.label') }}</div>
+        <h5 class="card-header">{{ __('home.search.label') }}</h5>
         <div class="card-body">
             @if ($errors->search->any())
                 @foreach ($errors->search->all() as $error)
@@ -55,6 +55,7 @@
                     </div>
                 @endforeach
             @endif
+            <!-- Search form -->
             <form action="/search" method="get">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="search" placeholder="{{ __('home.search.placeholder') }}">
@@ -66,6 +67,12 @@
                 </div>
                 @csrf
             </form>
+            
+            <!-- Tags list -->
+            <h5>Tags:</h5>
+            @foreach ($tags as $tag)
+                <a href='/tags/{{ str_replace("/", "%5c", $tag->name) }}' class="badge badge-secondary">{{$tag->name}}</a>
+            @endforeach
         </div>
     </div>
     <!-- ENDS SEARCH -->
@@ -94,7 +101,7 @@
                 <p class="card-text">
                     @foreach ($link->tags as $tag)
                         @if($tag)
-                            <a href='/tags/{{ str_replace("/", "%5c", $tag->name) }}' class="badge badge-light">{{$tag->name}}</a>
+                            <a href='/tags/{{ str_replace("/", "%5c", $tag->name) }}' class="badge badge-secondary">{{$tag->name}}</a>
                         @endif
                     @endforeach
                 </p>

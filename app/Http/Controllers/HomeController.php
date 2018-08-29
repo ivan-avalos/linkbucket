@@ -33,8 +33,9 @@ class HomeController extends Controller
     {
     	$user = User::find(Auth::id());
     	$links = $user->links()->orderBy('id', 'desc')->paginate(15);
+    	$tags = Link::existingTags();
     	
-    	return view('home', ['links'=>$links]);
+    	return view('home', ['links'=>$links, 'tags'=>$tags]);
     }
     
     public function search(Request $request)
