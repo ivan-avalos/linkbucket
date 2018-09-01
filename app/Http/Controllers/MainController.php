@@ -16,6 +16,9 @@ class MainController extends Controller
         $data = @file_get_contents($url);
         if($data === FALSE || $data === null) return $url;
         $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : $url;
+        $title = preg_replace_callback(array("/(&#x[0-9]+;)/", "/(&#[0-9a-zA-Z]+;)/", "/(&[0-9a-zA-Z]+;)/"), function($m) { 
+            return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES"); 
+        }, $title); 
         return $title;
     }  
     
@@ -38,8 +41,10 @@ class MainController extends Controller
         $dblink->link = $link;
         // rtconner tags
         $dblink->save();
-        $dblink->tag(explode(' ', $tags));
-        $dblink->save();
+        if (isset($tags)) {
+            $dblink->tag(explode(' ', $tags));
+            $dblink->save();
+        }
         
         return Redirect::route('home');
     }
