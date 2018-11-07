@@ -70,9 +70,11 @@
             
             <!-- Tags list -->
             <h5>Tags:</h5>
-            @foreach ($tags as $tag)
-                <a href='/tags/{{ str_replace("/", "%5c", $tag->name) }}' class="badge badge-secondary">{{$tag->name}}</a>
-            @endforeach
+            <div class="text-justify">
+                @foreach ($tags as $tag)
+                    <a href='/tags/{{ str_replace("/", "%5c", $tag->name) }}' class="badge badge-secondary">{{$tag->name}}</a>
+                @endforeach
+            </div>
         </div>
     </div>
     <!-- ENDS SEARCH -->
@@ -95,7 +97,7 @@
                 <h5 class="card-title">{{ $link->title }}</h5>
                 <!-- Link -->
                 <p class="card-text">
-                    <i style="color: #555555">{{ $link->link }}</i>
+                    <a href="{{$link->link}}" style="color: #555555; font-style: italic;">{{ $link->link }}</a>
                 </p>
                 <!-- Tags -->
                 <p class="card-text">

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Link;
+use Conner\Tagging\Model\Tag;
 
 class MainController extends Controller
 {
@@ -42,7 +43,7 @@ class MainController extends Controller
         // rtconner tags
         $dblink->save();
         if (isset($tags)) {
-            $dblink->tag(explode(' ', $tags));
+            $tag = $dblink->tag(explode(' ', $tags));
             $dblink->save();
         }
         

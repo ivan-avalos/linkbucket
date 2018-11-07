@@ -11,6 +11,7 @@ use Lang;
 
 use App\User;
 use App\Link;
+use Conner\Tagging\Model\Tag;
 
 class HomeController extends Controller
 {
