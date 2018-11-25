@@ -15,6 +15,7 @@ use Conner\Tagging\Model\Tag;
 
 class HomeController extends Controller
 {
+    
     /**
      * Create a new controller instance.
      *
@@ -32,44 +33,38 @@ class HomeController extends Controller
      */
     public function index()
     {
-    	$user = User::find(Auth::id());
-    	$links = $user->links()->orderBy('id', 'desc')->paginate(15);
-    	$tags = Link::existingTags();
-    	
-    	return view('home', ['links'=>$links, 'tags'=>$tags]);
+        	$user = User::find(Auth::id());
+        $links = $user->_retrieve($query = NULL, $paginate = true);
+        	$tags = Link::existingTags();
+        	
+        	return view('home', ['links'=>$links, 'tags'=>$tags]);
     }
     
     public function search(Request $request)
     {
-        // Validate
-        if(($validator = Validator::make($request->all(), [
-            'search'=>'required' ]))->fails())
-            return redirect('home')->withErrors($validator, 'search');
-        
-        $query = $request->input('search');
-        
-        $user = User::find(Auth::id());
-        $links = $user->links()
-            ->where('title', 'like', "%{$query}%")
-            ->orderBy('id', 'desc')
-            ->paginate(15)
-            ->appends($request->all());
-            
-        $_title = Lang::get('home.title.search', ['query'=>$query]);
-    	return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>$_title, 'back'=>true]);
+       // Validate input
+    	   if(($validator = Validator::make($request->all(), ['search'=>'required']))->fails())
+    	       return redirect('home')->withErrors($validator, 'search');
+    	       
+    	   $query = $request->input('search');
+    	   $user = User::find(Auth::id());
+    	   $links = $user->_retrieve($query = $query, $paginate = true)->appends($request->all());
+    	   $title = Lang::get('home.title.search', ['query'=>$query]);
+    	   
+    	   return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>$title, 'back'=>true]);
     }
     
     public function edit($id)
     {
         $link = Link::findOrFail($id);
-    	return view('edit', ['link'=>$link]);
+        	return view('edit', ['link'=>$link]);
     }
 
-    public function tags($tag){
-    	$user = User::find(Auth::id());
-    	$links = $user->links()->withAnyTag($tag)->orderBy('id', 'desc')->paginate(15);
-    	
-    	$_title = Lang::get('home.title.tags', ['tag'=>$tag]);
-        return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>$_title, 'back'=>true]);
+    public function tags($tag)
+    {
+        $user = User::find(Auth::id());
+        $links = $user->_retrieve($query = NULL, $paginate = true, $tag = $tag);
+        $title = Lang::get('home.title.tags', ['tag'=>$tag]);
+        return view('home', ['links'=>$links, 'no_add'=>true, 'title'=>$title, 'back'=>true]);
     }
 }

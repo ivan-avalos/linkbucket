@@ -14,83 +14,43 @@ class ApiController extends Controller
     
     //
     public function retrieve() {
-        $links = Auth::guard('api')->user()->links()->orderBy('id', 'desc')->get();
-        $cleanLinks = Auth::guard('api')->user()->links()->orderBy('id', 'desc')->get();
+        $user = Auth::guard('api')->user();
+        $links = $user->_retrieve();
+        $cleanLinks = $user->_retrieve();
+        
+        // Clean useless fields
         $tags = [];
         foreach($links as $link) $tags[] = $link->tagNames();
-        foreach(range(0, count($links)-1) as $i) $cleanLinks[$i]->taggs = $tags[$i];
-            
+        foreach(range(0, count($links)-1) as $i) $cleanLinks[$i]->Tags = $tags[$i];
+        
         return response()->json($cleanLinks, 200);
     }
     
     public function single($id) {
-        $link = Auth::guard('api')->user()->links()->findOrFail($id);
-        $cleanLink = Auth::guard('api')->user()->links()->findOrFail($id);
-        $cleanLink->taggs = $link->tagNames();
+        $user = Auth::guard('api')->user();
+        $link = $user->_retrieve($query = NULL, $paginate = false, $tag = NULL, $id = $id);
+        $cleanLink = $user->_retrieve($query = NULL, $paginate = false, $tag = NULL, $id = $id);
+        $cleanLink->Tags = $link->tagNames();
         
         return response()->json($cleanLink, 200);
     }
     
-    private function get_website_title($url) {
-        $data = @file_get_contents($url);
-        if($data === FALSE || $data === null) return $url;
-        $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : $url;
-        return $title;
-    }  
-    
     //
     function add(Request $request) {
-        // Validate
-        $request->validate([
-            'link' => 'required|unique:links'
-        ]);
-        
-        $link = $request->input('link');
-        
-        // Get title from website
-        $title = $this->get_website_title ($link);
-        
-        $dblink = new Link;
-        $dblink->user_id = Auth::guard('api')->id();
-        $dblink->title = $title;
-        $dblink->link = $link;
-        // rtconner tags
-        if($request->has('tags')) {
-            $tags = $request->input('tags');
-            $dblink->save();
-            $dblink->tag(explode(' ', $tags));
-        }
-        $dblink->save();
-        
-        return $this->single($dblink->id);
+        $user = Auth::guard('api')->user();
+        return response()->json($user->_insert($request), 200);
     }
     
     function update($id, Request $request) {
-        $request->validate([
-            'title'=>'required',
-            'link'=>'required',
-            'tags'=>'required'
-        ]);
-        
-        $title = $request->input('title');
-        $link = $request->input('link');
-        $tags = $request->input('tags');
-    
         $user = Auth::guard('api')->user();
-        $dblink = $user->links()->findOrFail($id);
-        $dblink->title = $title;
-        $dblink->link = $link;
-        $dblink->save();
-        $dblink->retag(explode(' ', $tags));
-        $dblink->save();
-        
-        return $this->single($dblink->id);
+        return response()->json($user->_update($id, $request), 200);
     }
     
     function remove($id) {
-        $link = $this->single($id);
-        Auth::guard('api')->user()->links()->findOrFail($id)->delete();
-        return $link;
+        $user = Auth::guard('api')->user();
+        $link = $user->_retrieve($query = NULL, $paginate = false, $tag = NULL, $id = $id);
+        $user->_remove($id);
+        return response()->json($link, 200);
     }
     
     /**
