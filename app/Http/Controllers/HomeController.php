@@ -35,7 +35,7 @@ class HomeController extends Controller
     {
         	$user = User::find(Auth::id());
         $links = $user->_retrieve($query = NULL, $paginate = true);
-        	$tags = Link::existingTags();
+        	$tags = $user->retrieveTags();
         	
         	return view('home', ['links'=>$links, 'tags'=>$tags]);
     }

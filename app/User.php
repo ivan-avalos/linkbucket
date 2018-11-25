@@ -6,10 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Conner\Tagging\Taggable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Taggable;
 
     /**
      * The attributes that are mass assignable.
@@ -92,6 +94,7 @@ class User extends Authenticatable
             $tags = $request->input('tags');
             $dblink->save();
             $dblink->tag(explode(' ', $tags));
+            $this->tag(explode(' ', $tags));
         }
         $dblink->save();
         
@@ -114,6 +117,7 @@ class User extends Authenticatable
         $dblink->link = $link;
         $dblink->save();
         $dblink->retag(explode(' ', $tags));
+        $this->tag(explode(' ', $tags));
         $dblink->save();
         
         return $this->_retrieve($query = NULL, $paginate = false, $tag = NULL, $id = $id);
@@ -122,5 +126,14 @@ class User extends Authenticatable
     /* Remove link */
     public function _remove($id) {
         $this->links()->findOrFail($id)->delete();
+    }
+    
+    /** 
+     * Tagging library operations.
+     */
+     
+    // Retrieve tags
+    public function retrieveTags () {
+         return $this->tags;
     }
 }
