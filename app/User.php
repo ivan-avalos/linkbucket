@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Conner\Tagging\Taggable;
@@ -134,6 +135,15 @@ class User extends Authenticatable
      
     // Retrieve tags
     public function retrieveTags () {
-         return $this->tags;
+         $tags = [];
+         $linkTags = Link::existingTags();
+         $userTags = $this->tagNames();
+         
+         foreach ($linkTags as $tag) {
+             if (in_array($tag->name, $userTags)) {
+                 $tags[] = $tag->name;
+             }
+         }
+         return $tags;
     }
 }

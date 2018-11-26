@@ -72,7 +72,7 @@
             <h5>Tags:</h5>
             <div class="text-justify">
                 @foreach ($tags as $tag)
-                    <a href='/tags/{{ str_replace("/", "%5c", $tag->name) }}' class="badge badge-secondary">{{$tag->name}}</a>
+                    <a href='/tags/{{ str_replace("/", "%5c", $tag) }}' class="badge badge-secondary">{{$tag}}</a>
                 @endforeach
             </div>
         </div>
