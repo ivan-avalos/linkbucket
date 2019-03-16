@@ -39,7 +39,7 @@ class PocketJob implements ShouldQueue
      */
     public function handle()
     {
-        foreach($this->links as $link) {
+        /*foreach($this->links as $link) {
             Log::info("Adding {$link['title']} to DB.");            
             
             $dblink = Link::firstOrNew(['user_id'=>$link['user_id'], 'link'=>$link['link']]);
@@ -52,6 +52,11 @@ class PocketJob implements ShouldQueue
                 $dblink->tag(explode(' ', $link['tags']));
             }
             $dblink->save();
+        }*/
+        
+        foreach ($this->links as $link) {
+            $user = Auth::find($link['user_id']);
+            
         }
     }
 }

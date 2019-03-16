@@ -76,7 +76,7 @@ class User extends Authenticatable
     public function _insert(Request $request) {
         // Validate
         $request->validate([
-            'link' => 'required|unique:links'
+            'link' => 'required'
         ]);
         
         $link = $request->input('link');
